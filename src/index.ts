@@ -6,8 +6,10 @@ import dotenv from 'dotenv';
 import route_regtr from './router/regtr.router';
 import route_auth from './router/auth.router';
 
+import Conexiondb from "./utils/mongodb.connection";
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
+Conexiondb()
 
 const app = express();
 const port = process.env.GATEWAY_PORT;
