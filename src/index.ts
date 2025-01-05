@@ -26,7 +26,7 @@ app.use(
 );
 
 app.use('/api/sessions', route_regtr);
-app.use('/api/session', route_auth);
+app.use('/api/sessions', route_auth);
 
 process.on('SIGTERM', () => {
   console.log('SIGTERM signal received: closing gracefully');
