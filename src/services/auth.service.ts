@@ -3,13 +3,13 @@ import { OutPutUserSessionDTO } from '../dto/output.user.session.dto';
 import genereToken from '../middlewares/token.generate';
 import users_schema from '../utils/users.schema';
 import dotenv from "dotenv";
-import { findProductInDb } from './products.services';
 
 dotenv.config();
 
 interface FindProductResponse {
   owner: string;
   stat: boolean;
+  token: string | boolean
 }
 
 
@@ -17,11 +17,15 @@ const userAuthService = async (id: string, userIn: string, pswLogin: string): Pr
   try {
     console.log(`${process.env.MSPRODUCTS_URI}${process.env.MSPRODUCTS_LOGIN}`, { id, userIn })
 
-    const responseFindProduct:FindProductResponse = await findProductInDb(id)
+    const responseFindProduct = await axios.post<FindProductResponse>(
+      `${process.env.MSPRODUCTS_URI}${process.env.MSPRODUCTS_FIND}`, { id }
+    );
+
+    const { owner, stat } = responseFindProduct.data;
 
 
-    if (responseFindProduct.owner || !responseFindProduct.stat) {
-      console.log('objectOwner', {responseFindProduct});
+    if (!owner || !stat) {
+      console.log('objectOwner', {owner,stat});
       return { statusCode: 503, email: 'error, owner no found or unable', user: 'unknown', token: false };
     }
 
@@ -47,7 +51,7 @@ const userAuthService = async (id: string, userIn: string, pswLogin: string): Pr
       },
       { token });
 
-    return { statusCode: 200, email:responseFindProduct.owner, user: objectUser.user, token };
+    return { statusCode: 200, email:owner, user: objectUser.user, token };
   } catch (error: any) {
     console.error(`Error consultando API : ${error.message}`);
     return { statusCode: 500, email: `auth service gateway ${id}`, user: `auth service gateway ${userIn}` , token: false };

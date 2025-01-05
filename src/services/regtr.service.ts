@@ -3,7 +3,6 @@ import { OutPutUserSessionDTO } from '../dto/output.user.session.dto';
 import dotenv from "dotenv";
 import genereToken from '../middlewares/token.generate';
 import users_schema from '../utils/users.schema';
-import { loginProductInDb } from './products.services';
 
 dotenv.config();
 
@@ -25,7 +24,16 @@ export const userRegisterService = async (
 
     console.log('into gateway service regtr', { owner, user });
 
-    const objectOwner = await loginProductInDb(owner,clav_prodct)
+
+    const loginResponse = await axios.post<LoginProductResponse>(
+      `${process.env.MSPRODUCTS_URI}${process.env.MSPRODUCTS_LOGIN}`,
+      {
+        owner,
+        clav_prodct,
+      }
+    );
+
+    const objectOwner = loginResponse.data;
     console.log(2, objectOwner)
 
     if (!objectOwner || !objectOwner.stat) {
