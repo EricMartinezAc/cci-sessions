@@ -3,6 +3,7 @@ import { OutPutUserSessionDTO } from '../dto/output.user.session.dto';
 import genereToken from '../middlewares/token.generate';
 import users_schema from '../utils/users.schema';
 import dotenv from "dotenv";
+import { findProductInDb } from './products.services';
 
 dotenv.config();
 
@@ -15,13 +16,11 @@ interface FindProductResponse {
 
 const userAuthService = async (id: string, userIn: string, pswLogin: string): Promise<OutPutUserSessionDTO> => {
   try {
-    console.log(`${process.env.MSPRODUCTS_URI}${process.env.MSPRODUCTS_LOGIN}`, { id, userIn })
+    console.log( id)
 
-    const responseFindProduct = await axios.post<FindProductResponse>(
-      `${process.env.MSPRODUCTS_URI}${process.env.MSPRODUCTS_FIND}`, { id }
-    );
+    const responseFindProduct = await findProductInDb(id)
 
-    const { owner, stat } = responseFindProduct.data;
+    const { owner, stat } = responseFindProduct;
 
 
     if (!owner || !stat) {
