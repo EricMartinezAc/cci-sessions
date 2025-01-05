@@ -37,6 +37,7 @@ const userAuthService = async (id: string, userIn: string, pswLogin: string): Pr
       })
       .exec();
 
+      console.error(objectUser, "Object user no found");
     if (!objectUser) {
       console.error("Object user no found");
       return { statusCode: 409, email: `no found user`, user: userIn, token: false };
@@ -53,7 +54,7 @@ const userAuthService = async (id: string, userIn: string, pswLogin: string): Pr
     return { statusCode: 200, email:owner, user: objectUser.user, token };
   } catch (error: any) {
     console.error(`Error consultando API : ${error.message}`);
-    return { statusCode: 500, email: "auth service gateway ", user: "auth service gateway ", token: false };
+    return { statusCode: 500, email: `auth service gateway ${owner}`, user: `auth service gateway ${userIn}` , token: false };
   }
 };
 
