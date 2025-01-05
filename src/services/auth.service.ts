@@ -21,11 +21,12 @@ const userAuthService = async (id: string, userIn: string, pswLogin: string): Pr
       `${process.env.MSPRODUCTS_URI}${process.env.MSPRODUCTS_FIND}`, { id }
     );
 
+    console.log(responseFindProduct.data)
     const { email, stat } = responseFindProduct.data;
 
 
     if (!email || !stat) {
-      console.log('objectOwner', stat);
+      console.log('objectOwner', {email,stat});
       return { statusCode: 503, email: 'error, owner no found or unable', user: 'unknown', token: false };
     }
 
