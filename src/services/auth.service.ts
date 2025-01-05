@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 interface FindProductResponse {
-  email: string;
+  owner: string;
   stat: boolean;
   token: string | boolean
 }
@@ -21,12 +21,11 @@ const userAuthService = async (id: string, userIn: string, pswLogin: string): Pr
       `${process.env.MSPRODUCTS_URI}${process.env.MSPRODUCTS_FIND}`, { id }
     );
 
-    console.log(responseFindProduct.data)
-    const { email, stat } = responseFindProduct.data;
+    const { owner, stat } = responseFindProduct.data;
 
 
-    if (!email || !stat) {
-      console.log('objectOwner', {email,stat});
+    if (!owner || !stat) {
+      console.log('objectOwner', {owner,stat});
       return { statusCode: 503, email: 'error, owner no found or unable', user: 'unknown', token: false };
     }
 
@@ -51,7 +50,7 @@ const userAuthService = async (id: string, userIn: string, pswLogin: string): Pr
       },
       { token });
 
-    return { statusCode: 200, email, user: objectUser.user, token };
+    return { statusCode: 200, email:owner, user: objectUser.user, token };
   } catch (error: any) {
     console.error(`Error consultando API : ${error.message}`);
     return { statusCode: 500, email: "auth service gateway ", user: "auth service gateway ", token: false };
