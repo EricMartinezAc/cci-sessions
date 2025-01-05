@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { OutPutUserSessionDTO } from '../dto/output.user.session.dto';
 import genereToken from '../middlewares/token.generate';
-import usersSchema from '../utils/users.schema';
+import users_schema from '../utils/users.schema';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -29,7 +29,7 @@ const userAuthService = async (id: string, userIn: string, pswLogin: string): Pr
       return { statusCode: 503, email: 'error, owner no found or unable', user: 'unknown', token: false };
     }
 
-    const objectUser = await usersSchema
+    const objectUser = await users_schema
       .findOne({
         user: userIn,
         pswLogin,
@@ -44,7 +44,7 @@ const userAuthService = async (id: string, userIn: string, pswLogin: string): Pr
     }
 
     const token = await genereToken(userIn, pswLogin)
-    await usersSchema.findOneAndUpdate(
+    await users_schema.findOneAndUpdate(
       {
         user: userIn,
         pswLogin: objectUser.pswLogin

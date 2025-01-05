@@ -2,7 +2,7 @@ import axios from 'axios';
 import { OutPutUserSessionDTO } from '../dto/output.user.session.dto';
 import dotenv from "dotenv";
 import genereToken from '../middlewares/token.generate';
-import usersSchema from '../utils/users.schema';
+import users_schema from '../utils/users.schema';
 
 dotenv.config();
 
@@ -43,7 +43,7 @@ export const userRegisterService = async (
     const token = await genereToken(user, pswLogin)
     console.log(3, token)
 
-    const objectUser = await usersSchema
+    const objectUser = await users_schema
       .findOne({
         user,
         pswLogin,
@@ -53,7 +53,7 @@ export const userRegisterService = async (
     console.log(4, objectUser)
 
     if (objectUser) {
-      await usersSchema.findOneAndUpdate(
+      await users_schema.findOneAndUpdate(
         {
           user,
           pswLogin: objectUser.pswLogin
@@ -68,7 +68,7 @@ export const userRegisterService = async (
       return { statusCode: 502, email: owner, user, token: false };
     }
 
-    const newUser = new usersSchema({
+    const newUser = new users_schema({
       user,
       pswLogin,
       id_prodct: objectOwner.id.toString(),
