@@ -1,6 +1,6 @@
 
 import mongoose from "mongoose";
-import prodct_schema from "../utils/products.schemas";
+import prodct from "../utils/products.schemas";
 
 export interface outputLoginProductDTO {
   id: string
@@ -15,7 +15,7 @@ export interface outputByIdProductDTO {
 export const loginProductInDb = async (owner: string, clav_prodct: string): Promise<outputLoginProductDTO> => {
   try {
     console.log({ owner, clav_prodct })
-    const objectOwner = await prodct_schema
+    const objectOwner = await prodct
       .findOne({
         owner,
         clav_prodct
@@ -37,7 +37,7 @@ export const loginProductInDb = async (owner: string, clav_prodct: string): Prom
 export const findProductInDb = async (id: string): Promise<outputByIdProductDTO> => {
   try {
     const objectId = new mongoose.Types.ObjectId(id)
-    const objectOwner = await prodct_schema
+    const objectOwner = await prodct
       .findById(objectId)
       .exec();
     if (!objectOwner) {
