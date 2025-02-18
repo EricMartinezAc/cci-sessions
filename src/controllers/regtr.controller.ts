@@ -10,7 +10,12 @@ export interface DataUserOutputDTO {
 const userRegtrController = async (req: Request, res: Response): Promise<void> => {
   try {   
     const { owner, clav_prodct, user, pswLogin }: IntoUserRegtrDTO = req.body;
-    let userRegisterSuccess: OutPutUserSessionDTO = { statusCode: 404, email: 'unknow gateway controller regtr 20', user: `unknow gateway controller regtr 20`, token: false }
+    let userRegisterSuccess: OutPutUserSessionDTO = {
+      statusCode: 404,
+      email: "unknow gateway controller regtr 20",
+      user: { user: `unknow gateway controller regtr 20` },
+      token: false,
+    };
 
     console.log('into gateway controller regtr', { owner, user });
 
