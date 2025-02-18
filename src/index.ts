@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 import route_regtr from './router/regtr.router';
 import route_auth from './router/auth.router';
+import route_valideTokenActv from "./router/valideTokenActv.router";
 
 import Conexiondb from "./utils/mongodb.connection";
 
@@ -29,6 +30,7 @@ app.use(
 
 app.use('/api/sessions', route_regtr);
 app.use('/api/sessions', route_auth);
+app.use("/api/sessions", route_valideTokenActv);
 
 process.on('SIGTERM', () => {
   console.log('SIGTERM signal received: closing gracefully');
