@@ -13,13 +13,9 @@ const users_schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rol: {
-    type: String,
-    required: false,
-  },
   id_prodct: {
     type: String,
-    required: true
+    required: true,
     // mongoose.Schema.Types.ObjectId,
     // ref: "prodct",
   },
