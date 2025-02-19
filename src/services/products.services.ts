@@ -57,7 +57,7 @@ export const findProductInDbByEmail = async (
   try {
     const objectOwner = await prodct
       .findOne({
-        owner,
+        owner: owner,
       })
       .exec();
     if (!objectOwner) {

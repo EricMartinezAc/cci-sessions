@@ -28,7 +28,7 @@ const valideTokenActvController = async (
   } catch (error: any) {
     res.json({
       statusCode: 500,
-      token: `${error}`,
+      token: `controller: ${error}`,
     });
   }
 };
