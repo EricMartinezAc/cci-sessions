@@ -59,7 +59,7 @@ export const findProductInDbByEmail = async (email: string): Promise<string> => 
       })
       .exec();
     if (!objectOwner) {
-      return "error, owner no found";
+      return `${email}`;
     }
     return objectOwner._id.toString();
   } catch (error) {
