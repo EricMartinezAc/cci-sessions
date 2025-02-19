@@ -30,7 +30,7 @@ const valideTokenActvService = async ({
 
     if (!objectUser) {
       console.error("Object user no found");
-      throw new Error("Usuario no encontrado");
+      throw new Error(`${id_prodct} ${token} ${user}`);
     }
 
     return { statusCode: 200, token };
