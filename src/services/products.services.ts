@@ -51,13 +51,11 @@ export const findProductInDb = async (
   }
 };
 
-export const findProductInDbByEmail = async (
-  owner: string
-): Promise<string> => {
+export const findProductInDbByEmail = async (email: string): Promise<string> => {
   try {
     const objectOwner = await prodct
       .findOne({
-        owner: owner,
+        owner: email,
       })
       .exec();
     if (!objectOwner) {
