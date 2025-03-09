@@ -11,12 +11,9 @@ dotenv.config();
 
 const valideTokenActvService = async ({
   user,
-  email,
   token,
 }: INTO_valideTokenActv_DTO): Promise<OUTPUT_valideTokenActv_DTO> => {
   try {
-    const id_prodct: string = await findProductInDbByEmail(email);
-
     const ValideTokenSingle = await valideTokenSingle(token);
     if (!ValideTokenSingle.valid) throw new Error(ValideTokenSingle.error);
 
@@ -24,14 +21,14 @@ const valideTokenActvService = async ({
       .findOne({
         user: user,
         token: token,
-        id_prodct: id_prodct,
       })
       .exec();
 
     if (!objectUser) {
       console.error("Object user no found");
-      throw new Error(`${id_prodct} ${token} ${user}`);
+      throw new Error(`${token} ${user}`);
     }
+    console.log("find", objectUser);
 
     return { statusCode: 200, token };
   } catch (error: any) {

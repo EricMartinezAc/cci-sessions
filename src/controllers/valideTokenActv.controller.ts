@@ -14,14 +14,13 @@ const valideTokenActvController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { user, email, token }: INTO_valideTokenActv_DTO = req.body;
+    const { user, token }: INTO_valideTokenActv_DTO = req.body;
 
-    console.log("into valide token", { email, user });
+    console.log("into valide token", { user });
 
     const valideTokenActvSuccess: OUTPUT_valideTokenActv_DTO =
       await valideTokenActvService({
         user,
-        email,
         token,
       });
     res.json(valideTokenActvSuccess);
